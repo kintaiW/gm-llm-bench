@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Questions](https://img.shields.io/badge/questions-176%20MVP-blue.svg)](data/questions/)
 [![Categories](https://img.shields.io/badge/categories-C1--C6-orange.svg)](data/questions/)
-[![Part of](https://img.shields.io/badge/part%20of-gm--agent--stack-purple.svg)](https://github.com/yourusername/gm-agent-stack)
+[![Part of](https://img.shields.io/badge/part%20of-gm--agent--stack-purple.svg)](https://github.com/kintaiW/gm-agent-stack)
 
 ---
 
@@ -266,7 +266,7 @@ Python ≥ 3.11
 ### 1. 安装依赖
 
 ```bash
-git clone https://github.com/yourusername/gm-llm-bench
+git clone https://github.com/kintaiW/gm-llm-bench
 cd gm-llm-bench
 pip install -r requirements.txt
 ```
@@ -571,7 +571,7 @@ F1 = 2 × P × R / (P + R)
 
 ## 与 gm-agent-stack 的关系
 
-GM-Bench 是 [gm-agent-stack](https://github.com/yourusername/gm-agent-stack) 生态的组成部分：
+GM-Bench 是 [gm-agent-stack](https://github.com/kintaiW/gm-agent-stack) 生态的组成部分：
 
 ```
 gm-agent-stack
