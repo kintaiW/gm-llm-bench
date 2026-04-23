@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": ["id", "category", "question", "options", "answer", "clause", "explanation"],
+    "additionalProperties": true,
+    "properties": {
+      "id": {"type": "string", "pattern": "^C1-\\d{3}$"},
+      "category": {"type": "string", "const": "C1"},
+      "question": {"type": "string", "minLength": 5},
+      "options": {
+        "type": "object",
+        "required": ["A", "B", "C", "D"],
+        "properties": {
+          "A": {"type": "string"},
+          "B": {"type": "string"},
+          "C": {"type": "string"},
+          "D": {"type": "string"}
+        }
+      },
+      "answer": {"type": "string", "enum": ["A", "B", "C", "D"]},
+      "clause": {"type": "string"},
+      "explanation": {"type": "string"}
+    }
+  }
+}

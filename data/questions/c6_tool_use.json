@@ -1,0 +1,1702 @@
+[
+  {
+    "id": "C6-001",
+    "category": "C6",
+    "scenario": "用户请求：对字符串 '你好，国密！' 计算 SM3 摘要。",
+    "expected_tool_sequence": [
+      "svs_digest"
+    ],
+    "expected_params": {
+      "svs_digest": {
+        "data_hex": "e4bda0e5a5bdefbc8c5356532100"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm3_hash"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-002",
+    "category": "C6",
+    "scenario": "用户请求：列出当前连接的所有 USB Key 设备。",
+    "expected_tool_sequence": [
+      "skf_enum_devices"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-003",
+    "category": "C6",
+    "scenario": "用户请求：对一段文本进行 SM2 签名，然后验证签名。",
+    "expected_tool_sequence": [
+      "svs_sign",
+      "svs_verify"
+    ],
+    "expected_params": {
+      "svs_sign": {
+        "mode": "SignData"
+      },
+      "svs_verify": {
+        "mode": "VerifySignedData"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm2_sign",
+        "sdf_sm2_verify"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-004",
+    "category": "C6",
+    "scenario": "用户请求：获取当前连接的 HSM（SDF）设备信息，包括序列号和支持的算法。",
+    "expected_tool_sequence": [
+      "sdf_device_info"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_session_manage",
+        "sdf_device_info"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-005",
+    "category": "C6",
+    "scenario": "用户请求：导出 SVS 服务器上的签名证书（公钥证书）。",
+    "expected_tool_sequence": [
+      "svs_export_cert"
+    ],
+    "expected_params": {
+      "svs_export_cert": {
+        "cert_type": "sign"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-006",
+    "category": "C6",
+    "scenario": "用户请求：验证一张 SM2 证书是否有效（未过期、未吊销）。",
+    "expected_tool_sequence": [
+      "svs_validate_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-007",
+    "category": "C6",
+    "scenario": "用户请求：使用 SM4-CBC 对一段数据进行加密，密钥为 0102...0f10，IV 随机。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "action": "encrypt",
+        "mode": "CBC"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_sm4_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-008",
+    "category": "C6",
+    "scenario": "用户请求：通过 USB Key 验证用户 PIN 码，PIN 为 '123456'。",
+    "expected_tool_sequence": [
+      "skf_open_application"
+    ],
+    "expected_params": {
+      "skf_open_application": {
+        "pin": "123456"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-009",
+    "category": "C6",
+    "scenario": "用户请求：实现数字信封：用接收方证书加密一段重要数据，然后解密验证。",
+    "expected_tool_sequence": [
+      "svs_envelope_enc",
+      "svs_envelope_dec"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_sm2_crypt",
+        "sdf_sm4_crypt",
+        "sdf_sm2_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 7,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-010",
+    "category": "C6",
+    "scenario": "用户请求：在 UKey 上生成一对 SM2 密钥对，并保存到名为 'sm2_container' 的容器。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_gen_ecc_keypair"
+    ],
+    "expected_params": {
+      "skf_gen_ecc_keypair": {
+        "container": "sm2_container",
+        "action": "generate"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-011",
+    "category": "C6",
+    "scenario": "用户请求：解析一张 SM2 证书，提取证书主体（Subject）和有效期。",
+    "expected_tool_sequence": [
+      "svs_parse_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-012",
+    "category": "C6",
+    "scenario": "用户请求：生成 16 字节的硬件随机数，用于密钥生成。",
+    "expected_tool_sequence": [
+      "sdf_device_info"
+    ],
+    "expected_params": {
+      "sdf_device_info": {
+        "random_length": 16
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_device_info"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-013",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 生成一对 SM2 密钥对，用于非对称加密（加密密钥对）。",
+    "expected_tool_sequence": [
+      "sdf_gen_sm2_keypair"
+    ],
+    "expected_params": {
+      "sdf_gen_sm2_keypair": {
+        "key_usage": "encrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-014",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 计算一段数据的 SM3-HMAC，密钥为十六进制字符串。",
+    "expected_tool_sequence": [
+      "sdf_sm3_hash"
+    ],
+    "expected_params": {
+      "sdf_sm3_hash": {
+        "hmac": true
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm4_mac"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-015",
+    "category": "C6",
+    "scenario": "用户请求：从 UKey 的 'sign_container' 容器中导出 SM2 签名公钥证书（DER 格式）。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_export_cert"
+    ],
+    "expected_params": {
+      "skf_export_cert": {
+        "container": "sign_container",
+        "sign_flag": true
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-016",
+    "category": "C6",
+    "scenario": "用户请求：使用 SDF 设备通过内部密钥对数据做 SM2 签名（不导出���钥）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_sign"
+    ],
+    "expected_params": {
+      "sdf_sm2_sign": {
+        "scope": "internal"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-017",
+    "category": "C6",
+    "scenario": "用户请求：对一段数据用 SVS 进行 SignMessage（包含 SM3 预处理），并验证签名消息。",
+    "expected_tool_sequence": [
+      "svs_sign",
+      "svs_verify"
+    ],
+    "expected_params": {
+      "svs_sign": {
+        "mode": "SignMessage"
+      },
+      "svs_verify": {
+        "mode": "VerifySignedMessage"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-018",
+    "category": "C6",
+    "scenario": "用户请求：列出 UKey 上某个应用下所有容器名称。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_list_containers"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-019",
+    "category": "C6",
+    "scenario": "用户请求：使用 KEK 包装一个会话密钥，然后导入到 SDF 设备中。",
+    "expected_tool_sequence": [
+      "sdf_key_wrap"
+    ],
+    "expected_params": {
+      "sdf_key_wrap": {
+        "action": "import_with_kek"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-020",
+    "category": "C6",
+    "scenario": "用户请求：获取 UKey 设备详细信息（厂商、序列号、支持算法），不做任何认证操作。",
+    "expected_tool_sequence": [
+      "skf_enum_devices",
+      "skf_device_info"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "skf_device_info"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-021",
+    "category": "C6",
+    "scenario": "用户请求：用 SM4-GCM 模式加密数据，并提供 AAD（附加认证数据）。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "mode": "GCM",
+        "action": "encrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-022",
+    "category": "C6",
+    "scenario": "用户请求：验证一个 SignedData 格式的签名（包含原始数据和签名值），使用 SVS 接口。",
+    "expected_tool_sequence": [
+      "svs_verify"
+    ],
+    "expected_params": {
+      "svs_verify": {
+        "mode": "VerifySignedData"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-023",
+    "category": "C6",
+    "scenario": "用户请求：修改 UKey 用户 PIN，从旧 PIN '123456' 改为新 PIN '654321'。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_manage_pin"
+    ],
+    "expected_params": {
+      "skf_manage_pin": {
+        "action": "change"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-024",
+    "category": "C6",
+    "scenario": "用户请求：用外部 SM2 公钥（十六进制）对数据做加密（SDF 外部密钥加密）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm2_crypt": {
+        "action": "encrypt",
+        "scope": "external"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-025",
+    "category": "C6",
+    "scenario": "用户请求：导入一张 SM2 证书到 UKey 的指定容器中。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_import_cert"
+    ],
+    "expected_params": {
+      "skf_import_cert": {
+        "container": "sign_container"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-026",
+    "category": "C6",
+    "scenario": "用户请求：对一段二进制数据（已有外部 SM2 公钥），用 SDF 外部验签。",
+    "expected_tool_sequence": [
+      "sdf_sm2_verify"
+    ],
+    "expected_params": {
+      "sdf_sm2_verify": {
+        "scope": "external"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-027",
+    "category": "C6",
+    "scenario": "用户请求：检查 UKey PIN 的错误计数和剩余尝试次数。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_manage_pin"
+    ],
+    "expected_params": {
+      "skf_manage_pin": {
+        "action": "info"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_manage_pin"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-028",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 生成带 KEK 保护的工作密钥，用于后续 SM4 加密。",
+    "expected_tool_sequence": [
+      "sdf_key_wrap"
+    ],
+    "expected_params": {
+      "sdf_key_wrap": {
+        "action": "generate_with_kek"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-029",
+    "category": "C6",
+    "scenario": "用户请求：使用 UKey 进行 SM3 摘要运算（通过设备硬件加速）。",
+    "expected_tool_sequence": [
+      "skf_sm3_digest"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "svs_digest"
+      ],
+      [
+        "sdf_sm3_hash"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-030",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 对数据计算 SM4-MAC（消息认证码）。",
+    "expected_tool_sequence": [
+      "sdf_sm4_mac"
+    ],
+    "expected_params": {
+      "sdf_sm4_mac": {
+        "action": "calculate"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm3_hash"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-031",
+    "category": "C6",
+    "scenario": "用户请求：完整演示一次 SM2 签名流程：先获取证书，再签名，再验签。",
+    "expected_tool_sequence": [
+      "svs_export_cert",
+      "svs_sign",
+      "svs_verify"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-032",
+    "category": "C6",
+    "scenario": "用户请求：解密一段 SDF 加密的密文，使用设备内部密钥（内部解密）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm2_crypt": {
+        "action": "decrypt",
+        "scope": "internal"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-033",
+    "category": "C6",
+    "scenario": "用户请求：枚举 UKey 上所有应用，然后查看某个应用下的容器列表。",
+    "expected_tool_sequence": [
+      "skf_enum_devices",
+      "skf_list_containers"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "skf_open_application",
+        "skf_list_containers"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-034",
+    "category": "C6",
+    "scenario": "用户请求：验证一段 SignedMessage 格式的签名（消息和签名分离存储）。",
+    "expected_tool_sequence": [
+      "svs_verify"
+    ],
+    "expected_params": {
+      "svs_verify": {
+        "mode": "VerifySignedMessage"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-035",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 设备通过内部密钥对 SM2 密文解密，并验证结果正确。",
+    "expected_tool_sequence": [
+      "sdf_sm2_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm2_crypt": {
+        "action": "decrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-036",
+    "category": "C6",
+    "scenario": "用户请求：在不打开应用的情况下，直接查看 UKey 设备的设备认证信息。",
+    "expected_tool_sequence": [
+      "skf_device_info"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "skf_enum_devices"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-037",
+    "category": "C6",
+    "scenario": "用户请求：对批量数据（3 条记录）分别计算 SM3 摘要，请问应该调用几次工具？",
+    "expected_tool_sequence": [
+      "svs_digest",
+      "svs_digest",
+      "svs_digest"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_sm3_hash",
+        "sdf_sm3_hash",
+        "sdf_sm3_hash"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-038",
+    "category": "C6",
+    "scenario": "用户请求：已有 SM4-CBC 密文，需要解密，IV 在密文前 16 字节。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "action": "decrypt",
+        "mode": "CBC"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_sm4_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-039",
+    "category": "C6",
+    "scenario": "用户请求：通过 SVS 接口对一段数据同时完成签名和消息封装（SignedMessage 格式）。",
+    "expected_tool_sequence": [
+      "svs_sign"
+    ],
+    "expected_params": {
+      "svs_sign": {
+        "mode": "SignMessage"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-040",
+    "category": "C6",
+    "scenario": "用户请求：通过密码机生成 SM2 密钥对，并将加密公钥导出用于数字信封。",
+    "expected_tool_sequence": [
+      "sdf_gen_sm2_keypair"
+    ],
+    "expected_params": {
+      "sdf_gen_sm2_keypair": {
+        "key_usage": "encrypt",
+        "export_pubkey": true
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-041",
+    "category": "C6",
+    "scenario": "用户请求：管理 SDF 会话：打开会话，执行签名，关闭会话。",
+    "expected_tool_sequence": [
+      "sdf_session_manage",
+      "sdf_sm2_sign",
+      "sdf_session_manage"
+    ],
+    "expected_params": {
+      "sdf_session_manage": {
+        "action": "open"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm2_sign"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 7,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-042",
+    "category": "C6",
+    "scenario": "用户请求：将一个外部 SM2 密钥对（十六进制私钥+公钥）导入到 UKey 容器。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_gen_ecc_keypair"
+    ],
+    "expected_params": {
+      "skf_gen_ecc_keypair": {
+        "action": "import"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-043",
+    "category": "C6",
+    "scenario": "用户请求：用 UKey 上的 SM2 私钥签名，签名前不做预哈希（设备内部计算 Z 值）。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_sm2_sign"
+    ],
+    "expected_params": {
+      "skf_sm2_sign": {
+        "pre_hash": false
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-044",
+    "category": "C6",
+    "scenario": "用户请求：查看当前 SDF 设备的访问权限状态（是否已获得私钥访问权限）。",
+    "expected_tool_sequence": [
+      "sdf_session_manage"
+    ],
+    "expected_params": {
+      "sdf_session_manage": {
+        "action": "get_access_right"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_device_info"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-045",
+    "category": "C6",
+    "scenario": "用户请求：用 SVS 接口对接收到的数字信封密文进行解密。",
+    "expected_tool_sequence": [
+      "svs_envelope_dec"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-046",
+    "category": "C6",
+    "scenario": "用户请求：使用 SKF 接口对数据进行 SM4-ECB 模式加密（注：ECB 是不安全的，但用户明确要求）。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_sm4_crypt"
+    ],
+    "expected_params": {
+      "skf_sm4_crypt": {
+        "mode": "ECB",
+        "action": "encrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-047",
+    "category": "C6",
+    "scenario": "用户请求：验证一张证书的 SM2 公钥是否与预期公钥一致，先解析证书再比对。",
+    "expected_tool_sequence": [
+      "svs_parse_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "svs_validate_cert",
+        "svs_parse_cert"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-048",
+    "category": "C6",
+    "scenario": "用户请求：用 SDF 进行 SM4-CBC 加密，同时计算 SM3 摘要，两个独立操作。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt",
+      "sdf_sm3_hash"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_sm3_hash",
+        "sdf_sm4_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 7,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-049",
+    "category": "C6",
+    "scenario": "用户请求：通过 SVS 做完整的证书验证流程：先导出证书，解析，再验证有效性。",
+    "expected_tool_sequence": [
+      "svs_export_cert",
+      "svs_parse_cert",
+      "svs_validate_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "svs_export_cert",
+        "svs_validate_cert"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-050",
+    "category": "C6",
+    "scenario": "用户请求：演示完整数字信封流程：获取接收方证书→加密→解密→验证数据一致。",
+    "expected_tool_sequence": [
+      "svs_export_cert",
+      "svs_envelope_enc",
+      "svs_envelope_dec"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-051",
+    "category": "C6",
+    "scenario": "用户请求：SKF 接口中，如何使用 SM2 公钥验签（不依赖 UKey 设备的内部密钥）？",
+    "expected_tool_sequence": [
+      "skf_sm2_verify"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_sm2_verify"
+      ],
+      [
+        "svs_verify"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-052",
+    "category": "C6",
+    "scenario": "用户请求：通过 SVS 接口对一段已有签名的数据验签，签名是 DER 格式的 SM2 签名值。",
+    "expected_tool_sequence": [
+      "svs_verify"
+    ],
+    "expected_params": {
+      "svs_verify": {
+        "sig_format": "DER"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-053",
+    "category": "C6",
+    "scenario": "用户请求：对一段 JSON 数据序列化后，计算其 SM3 摘要并 hex 编码返回。",
+    "expected_tool_sequence": [
+      "svs_digest"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "sdf_sm3_hash"
+      ],
+      [
+        "skf_sm3_digest"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-054",
+    "category": "C6",
+    "scenario": "用户请求：使用 UKey 的 SM2 私钥对数据签名，签名时要预先计算 SM3 哈希（pre_hash=true）。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_sm2_sign"
+    ],
+    "expected_params": {
+      "skf_sm2_sign": {
+        "pre_hash": true
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-055",
+    "category": "C6",
+    "scenario": "用户请求：从 SDF 设备内部密钥加密一段数据（使用密码机内部 SM2 加密密钥）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm2_crypt": {
+        "action": "encrypt",
+        "scope": "internal"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-056",
+    "category": "C6",
+    "scenario": "用户请求：查询当前 SVS 服务器支持的签名算法和证书类型。",
+    "expected_tool_sequence": [
+      "svs_export_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "svs_parse_cert"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-057",
+    "category": "C6",
+    "scenario": "用户请求：对一段文本的 SM3 摘要进行 SM2 签名（先摘要，再签名）。",
+    "expected_tool_sequence": [
+      "svs_digest",
+      "svs_sign"
+    ],
+    "expected_params": {
+      "svs_sign": {
+        "mode": "SignData",
+        "pre_hash": true
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "svs_sign"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-058",
+    "category": "C6",
+    "scenario": "用户请求：通过 SDF 实现认证加密（SM4-GCM），输入含 AAD 附加数据。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "mode": "GCM"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-059",
+    "category": "C6",
+    "scenario": "用户请求：在没有 HSM 设备时，如何用 SVS 服务器完成 SM3 摘要？",
+    "expected_tool_sequence": [
+      "svs_digest"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-060",
+    "category": "C6",
+    "scenario": "用户请求：获取 UKey PIN 的剩余错误尝试次数。",
+    "expected_tool_sequence": [
+      "skf_manage_pin"
+    ],
+    "expected_params": {
+      "skf_manage_pin": {
+        "action": "info"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_open_application",
+        "skf_manage_pin"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-061",
+    "category": "C6",
+    "scenario": "用户请求：SDF 密码机提供 SM4-CCM 加密，请调用相应工具加密一段数据。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "mode": "CCM",
+        "action": "encrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-062",
+    "category": "C6",
+    "scenario": "用户请求：通过 SKF 设备进行 SM3 摘要，数据为大文件（分块处理）。",
+    "expected_tool_sequence": [
+      "skf_sm3_digest"
+    ],
+    "expected_params": {
+      "skf_sm3_digest": {
+        "chunked": true
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "svs_digest"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-063",
+    "category": "C6",
+    "scenario": "用户请求：使用 SDF 的对称密钥计算 MAC，用于数据完整性验证（不是签名）。",
+    "expected_tool_sequence": [
+      "sdf_sm4_mac"
+    ],
+    "expected_params": {
+      "sdf_sm4_mac": {
+        "action": "calculate"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-064",
+    "category": "C6",
+    "scenario": "用户请求：完整 UKey 使用流程：枚举设备→打开应用→PIN 认证→签名→退出。",
+    "expected_tool_sequence": [
+      "skf_enum_devices",
+      "skf_open_application",
+      "skf_sm2_sign"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-065",
+    "category": "C6",
+    "scenario": "用户请求：使用 SDF 生成一个加密公私钥对，导出加密公钥用于对方数字信封加密。",
+    "expected_tool_sequence": [
+      "sdf_gen_sm2_keypair"
+    ],
+    "expected_params": {
+      "sdf_gen_sm2_keypair": {
+        "key_usage": "encrypt",
+        "export_pubkey": true
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-066",
+    "category": "C6",
+    "scenario": "用户请求：对 SVS 签名验签服务器的证书做完整性验证（验签服务器自身证书）。",
+    "expected_tool_sequence": [
+      "svs_export_cert",
+      "svs_validate_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-067",
+    "category": "C6",
+    "scenario": "用户请求：使用 SDF 的内部签名密钥对，执行批量签名（3 条数据）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_sign",
+      "sdf_sm2_sign",
+      "sdf_sm2_sign"
+    ],
+    "expected_params": {
+      "sdf_sm2_sign": {
+        "scope": "internal"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-068",
+    "category": "C6",
+    "scenario": "用户请求：用 SKF 接口对数据做 SM4-CBC 解密，IV 在参数中单独传入。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_sm4_crypt"
+    ],
+    "expected_params": {
+      "skf_sm4_crypt": {
+        "action": "decrypt",
+        "mode": "CBC"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "skf_sm4_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-069",
+    "category": "C6",
+    "scenario": "用户请求：通过 SDF 接口导出签名公钥（不是加密公钥）。",
+    "expected_tool_sequence": [
+      "sdf_gen_sm2_keypair"
+    ],
+    "expected_params": {
+      "sdf_gen_sm2_keypair": {
+        "key_usage": "sign",
+        "export_pubkey": true
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-070",
+    "category": "C6",
+    "scenario": "用���请求：调用 SVS 接口解密一个数字信封，返回明文数据。",
+    "expected_tool_sequence": [
+      "svs_envelope_dec"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-071",
+    "category": "C6",
+    "scenario": "用户请求：对 UKey 上的容器类型进行查询（是签名容器还是加密容器）。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_list_containers"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-072",
+    "category": "C6",
+    "scenario": "用户请求：获取 SDF 设备生成的 32 字节随机数用作 IV。",
+    "expected_tool_sequence": [
+      "sdf_device_info"
+    ],
+    "expected_params": {
+      "sdf_device_info": {
+        "random_length": 32
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-073",
+    "category": "C6",
+    "scenario": "用户请求：用 SVS 对一段数据同时做 SM3 摘要和 SM2 签名（SignMessage 包含两步）。",
+    "expected_tool_sequence": [
+      "svs_sign"
+    ],
+    "expected_params": {
+      "svs_sign": {
+        "mode": "SignMessage"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-074",
+    "category": "C6",
+    "scenario": "用户请求：通过 SDF 进行身份认证加密（AuthEnc），加密数据同时计算 MAC。",
+    "expected_tool_sequence": [
+      "sdf_sm4_mac"
+    ],
+    "expected_params": {
+      "sdf_sm4_mac": {
+        "action": "auth_enc"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "sdf_sm4_crypt"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-075",
+    "category": "C6",
+    "scenario": "用户请求：对一段数据先用 SDF 签名，再用 SVS 验签（跨设备验签场景）。",
+    "expected_tool_sequence": [
+      "sdf_sm2_sign",
+      "svs_verify"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-076",
+    "category": "C6",
+    "scenario": "用户请求：通过 SKF 导出 UKey 中加密证书（区别于签名证书），用于信封加密。",
+    "expected_tool_sequence": [
+      "skf_open_application",
+      "skf_export_cert"
+    ],
+    "expected_params": {
+      "skf_export_cert": {
+        "sign_flag": false
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-077",
+    "category": "C6",
+    "scenario": "用户请求：对一段大文件（>1MB）用 SDF 进行 SM4-CBC 分块加密，然后解密验证。",
+    "expected_tool_sequence": [
+      "sdf_sm4_crypt",
+      "sdf_sm4_crypt"
+    ],
+    "expected_params": {
+      "sdf_sm4_crypt": {
+        "mode": "CBC",
+        "action": "encrypt"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-078",
+    "category": "C6",
+    "scenario": "用户请求：验证 SVS 接口接收到的签名是否包含完整证书链（SignedMessage 格式）。",
+    "expected_tool_sequence": [
+      "svs_verify",
+      "svs_validate_cert"
+    ],
+    "expected_params": {
+      "svs_verify": {
+        "mode": "VerifySignedMessage"
+      }
+    },
+    "acceptable_alternatives": [
+      [
+        "svs_verify"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  },
+  {
+    "id": "C6-079",
+    "category": "C6",
+    "scenario": "用户请求：在 SDF 设备上用 KEK 加密保护一个 SM2 私钥，准备安全导出。",
+    "expected_tool_sequence": [
+      "sdf_key_wrap"
+    ],
+    "expected_params": {
+      "sdf_key_wrap": {
+        "action": "generate_with_kek"
+      }
+    },
+    "acceptable_alternatives": [],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 8,
+      "wrong_tool": 0,
+      "partial_sequence": 5
+    }
+  },
+  {
+    "id": "C6-080",
+    "category": "C6",
+    "scenario": "用户请求：完整演示一次密评场景中的 SM2 密钥对生命周期：生成→使用（签名）→证书导入→导出证书→验证证书有效性。",
+    "expected_tool_sequence": [
+      "sdf_gen_sm2_keypair",
+      "sdf_sm2_sign",
+      "skf_import_cert",
+      "svs_export_cert",
+      "svs_validate_cert"
+    ],
+    "expected_params": {},
+    "acceptable_alternatives": [
+      [
+        "skf_gen_ecc_keypair",
+        "skf_sm2_sign",
+        "skf_import_cert",
+        "svs_export_cert",
+        "svs_validate_cert"
+      ]
+    ],
+    "scoring": {
+      "exact_match": 10,
+      "acceptable": 7,
+      "partial_sequence": 5,
+      "wrong_tool": 0
+    }
+  }
+]

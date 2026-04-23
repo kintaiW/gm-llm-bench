@@ -1,0 +1,323 @@
+[
+  {
+    "id": "C2-001",
+    "category": "C2",
+    "question": "以下哪个 GM/T 标准规定了 SM2 椭圆曲线公钥密码算法？",
+    "answer": "GM/T 0003-2012",
+    "options": ["GM/T 0003-2012", "GM/T 0004-2012", "GM/T 0009-2012", "GM/T 0002-2012"],
+    "distractors_explanation": "0004=SM3, 0009=SM2签名应用规范, 0002=SM4"
+  },
+  {
+    "id": "C2-002",
+    "category": "C2",
+    "question": "智能密码钥匙（USB Key）密码应用接口规范对应哪个 GM/T 标准？",
+    "answer": "GM/T 0016-2012",
+    "options": ["GM/T 0016-2012", "GM/T 0018-2023", "GM/T 0029-2014", "GM/T 0024-2014"],
+    "distractors_explanation": "0018=服务器密码机, 0029=签名验签服务器, 0024=SSL VPN"
+  },
+  {
+    "id": "C2-003",
+    "category": "C2",
+    "question": "数字证书格式（SM2 X.509 证书）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0015-2012",
+    "options": ["GM/T 0015-2012", "GM/T 0016-2012", "GM/T 0010-2012", "GM/T 0020-2012"],
+    "distractors_explanation": "0016=SKF, 0010=数字信封, 0020=证书申请语法规范"
+  },
+  {
+    "id": "C2-004",
+    "category": "C2",
+    "question": "SM2 密码算法加密签名消息语法规范对应哪个 GM/T 标准？",
+    "answer": "GM/T 0010-2012",
+    "options": ["GM/T 0010-2012", "GM/T 0009-2012", "GM/T 0015-2012", "GM/T 0006-2012"],
+    "distractors_explanation": "0009=SM2签名应用规范, 0015=SM2证书格式, 0006=密码应用标识"
+  },
+  {
+    "id": "C2-005",
+    "category": "C2",
+    "question": "TLCP 传输层密码协议对应哪个国家标准？",
+    "answer": "GB/T 38636-2020",
+    "options": ["GB/T 38636-2020", "GM/T 0024-2014", "GB/T 39786-2021", "GM/T 0028-2014"],
+    "distractors_explanation": "0024=SSL VPN规范（旧）, 39786=密码应用基本要求, 0028=密码模块安全要求"
+  },
+  {
+    "id": "C2-006",
+    "category": "C2",
+    "question": "服务器密码机密码应用接口规范对应哪个 GM/T 标准？",
+    "answer": "GM/T 0018-2023",
+    "options": ["GM/T 0018-2023", "GM/T 0016-2012", "GM/T 0029-2014", "GM/T 0032-2014"],
+    "distractors_explanation": "0016=SKF/USB Key, 0029=签名验签服务器, 0032=密码机接口规范（旧版）"
+  },
+  {
+    "id": "C2-007",
+    "category": "C2",
+    "question": "SM2 数字签名应用规范（含 Z 值定义）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0009-2012",
+    "options": ["GM/T 0009-2012", "GM/T 0003-2012", "GM/T 0010-2012", "GM/T 0006-2012"],
+    "distractors_explanation": "0003=SM2算法本身, 0010=CMS/数字信封, 0006=密码标识"
+  },
+  {
+    "id": "C2-008",
+    "category": "C2",
+    "question": "商用密码应用安全性评估基本要求（密评标准）对应哪个国家标准？",
+    "answer": "GB/T 39786-2021",
+    "options": ["GB/T 39786-2021", "GM/T 0054-2018", "GB/T 22239-2019", "GM/T 0028-2014"],
+    "distractors_explanation": "0054=信息系统密评技术要求, 22239=等级保护, 0028=密码模块安全要求"
+  }
+,
+  {
+    "id": "C2-009",
+    "category": "C2",
+    "question": "SM4 分组密码算法对应哪个 GM/T 标准？",
+    "answer": "GM/T 0002-2012",
+    "options": ["GM/T 0002-2012", "GM/T 0003-2012", "GM/T 0004-2012", "GM/T 0001-2012"],
+    "distractors_explanation": "0003=SM2椭圆曲线, 0004=SM3杂凑, 0001=祖冲之序列密码"
+  },
+  {
+    "id": "C2-010",
+    "category": "C2",
+    "question": "SM4 算法的分组长度和密钥长度分别是多少位？其规范来自哪个标准？",
+    "answer": "GM/T 0002-2012",
+    "options": ["GM/T 0002-2012", "GM/T 0001-2012", "GM/T 0004-2012", "GM/T 0028-2014"],
+    "distractors_explanation": "0001=ZUC序列密码（不同分组概念）, 0004=SM3（杂凑不是分组密码）, 0028=密码模块安全要求"
+  },
+  {
+    "id": "C2-011",
+    "category": "C2",
+    "question": "规定 SM4 分组密码算法用于 WLAN 数据加密的行业标准是哪个？",
+    "answer": "GM/T 0002-2012",
+    "options": ["GM/T 0002-2012", "GM/T 0003-2012", "GM/T 0023-2014", "GM/T 0024-2014"],
+    "distractors_explanation": "0003=SM2（公钥算法）, 0023=IPSec VPN规范, 0024=SSL VPN规范"
+  },
+  {
+    "id": "C2-012",
+    "category": "C2",
+    "question": "SM2 椭圆曲线推荐参数（素数域256位）定义在哪个标准中？",
+    "answer": "GM/T 0003-2012",
+    "options": ["GM/T 0003-2012", "GM/T 0009-2012", "GM/T 0015-2012", "GM/T 0010-2012"],
+    "distractors_explanation": "0009=SM2签名应用规范（引用算法参数但不定义）, 0015=SM2证书格式, 0010=SM2加密签名消息语法"
+  },
+  {
+    "id": "C2-013",
+    "category": "C2",
+    "question": "SM2 密钥交换协议规定在哪个 GM/T 标准的第三部分？",
+    "answer": "GM/T 0003-2012",
+    "options": ["GM/T 0003-2012", "GM/T 0009-2012", "GM/T 0014-2012", "GM/T 0006-2012"],
+    "distractors_explanation": "0009=数字签名应用规范, 0014=数字证书认证系统密码协议, 0006=密码应用标识规范"
+  },
+  {
+    "id": "C2-014",
+    "category": "C2",
+    "question": "SM2 公钥加密算法规定在哪个 GM/T 标准的第四部分？",
+    "answer": "GM/T 0003-2012",
+    "options": ["GM/T 0003-2012", "GM/T 0010-2012", "GM/T 0020-2012", "GM/T 0021-2012"],
+    "distractors_explanation": "0010=SM2加密签名消息语法规范（上层应用）, 0020=证书申请语法规范, 0021=PKI互操作检测规范"
+  },
+  {
+    "id": "C2-015",
+    "category": "C2",
+    "question": "SM3 密码杂凑算法对应哪个 GM/T 标准？",
+    "answer": "GM/T 0004-2012",
+    "options": ["GM/T 0004-2012", "GM/T 0003-2012", "GM/T 0002-2012", "GM/T 0009-2012"],
+    "distractors_explanation": "0003=SM2椭圆曲线, 0002=SM4分组密码, 0009=SM2数字签名应用规范"
+  },
+  {
+    "id": "C2-016",
+    "category": "C2",
+    "question": "SM3 杂凑算法输出长度为 256 位，其规范文件编号是？",
+    "answer": "GM/T 0004-2012",
+    "options": ["GM/T 0004-2012", "GM/T 0001-2012", "GM/T 0028-2014", "GM/T 0002-2012"],
+    "distractors_explanation": "0001=ZUC序列密码, 0028=密码模块安全要求, 0002=SM4分组密码"
+  },
+  {
+    "id": "C2-017",
+    "category": "C2",
+    "question": "SM2 数字签名中用于计算 Z 值所使用的杂凑算法规范对应哪个标准？",
+    "answer": "GM/T 0004-2012",
+    "options": ["GM/T 0004-2012", "GM/T 0009-2012", "GM/T 0003-2012", "GM/T 0010-2012"],
+    "distractors_explanation": "0009=SM2数字签名应用规范（使用SM3但不定义SM3）, 0003=SM2椭圆曲线算法, 0010=SM2消息语法"
+  },
+  {
+    "id": "C2-018",
+    "category": "C2",
+    "question": "密码应用标识规范（OID 分配规则）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0006-2012",
+    "options": ["GM/T 0006-2012", "GM/T 0015-2012", "GM/T 0020-2012", "GM/T 0009-2012"],
+    "distractors_explanation": "0015=SM2证书格式（使用OID但不定义分配规则）, 0020=证书申请语法, 0009=SM2签名应用规范"
+  },
+  {
+    "id": "C2-019",
+    "category": "C2",
+    "question": "国密算法 OID（对象标识符）的注册与命名规则由哪个 GM/T 标准规定？",
+    "answer": "GM/T 0006-2012",
+    "options": ["GM/T 0006-2012", "GM/T 0021-2012", "GM/T 0014-2012", "GM/T 0003-2012"],
+    "distractors_explanation": "0021=PKI互操作检测规范, 0014=数字证书认证系统密码协议, 0003=SM2椭圆曲线算法"
+  },
+  {
+    "id": "C2-020",
+    "category": "C2",
+    "question": "SM2 数字签名应用规范（含签名流程和 Z 值定义）对应哪个 GM/T 标准？（注意区别于算法本身）",
+    "answer": "GM/T 0009-2012",
+    "options": ["GM/T 0009-2012", "GM/T 0003-2012", "GM/T 0015-2012", "GM/T 0010-2012"],
+    "distractors_explanation": "0003=SM2椭圆曲线算法（算法层）, 0015=SM2证书格式（应用层）, 0010=SM2加密签名消息语法"
+  },
+  {
+    "id": "C2-021",
+    "category": "C2",
+    "question": "以下哪个标准定义了 SM2 数字签名中用户可辨别标识（ID）的使用规则？",
+    "answer": "GM/T 0009-2012",
+    "options": ["GM/T 0009-2012", "GM/T 0003-2012", "GM/T 0006-2012", "GM/T 0020-2012"],
+    "distractors_explanation": "0003=SM2算法规范本身, 0006=密码应用标识规范（OID注册）, 0020=证书申请语法规范"
+  },
+  {
+    "id": "C2-022",
+    "category": "C2",
+    "question": "SM2 密码算法加密签名消息语法规范（类似 CMS 格式）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0010-2012",
+    "options": ["GM/T 0010-2012", "GM/T 0009-2012", "GM/T 0015-2012", "GM/T 0020-2012"],
+    "distractors_explanation": "0009=SM2数字签名应用规范, 0015=SM2证书格式, 0020=证书申请语法规范（PKCS#10类似）"
+  },
+  {
+    "id": "C2-023",
+    "category": "C2",
+    "question": "数字信封（Enveloped Data）格式在国密体系中由哪个标准规定？",
+    "answer": "GM/T 0010-2012",
+    "options": ["GM/T 0010-2012", "GM/T 0014-2012", "GM/T 0023-2014", "GM/T 0024-2014"],
+    "distractors_explanation": "0014=数字证书认证系统密码协议规范, 0023=IPSec VPN技术规范, 0024=SSL VPN技术规范"
+  },
+  {
+    "id": "C2-024",
+    "category": "C2",
+    "question": "可信计算密码支撑平台功能与接口规范对应哪个 GM/T 标准？",
+    "answer": "GM/T 0011-2012",
+    "options": ["GM/T 0011-2012", "GM/T 0016-2012", "GM/T 0018-2023", "GM/T 0028-2014"],
+    "distractors_explanation": "0016=智能密码钥匙接口规范, 0018=服务器密码机接口规范, 0028=密码模块安全要求"
+  },
+  {
+    "id": "C2-025",
+    "category": "C2",
+    "question": "以下哪个标准规定了可信平台控制模块（TPCM）的密码算法使用规范？",
+    "answer": "GM/T 0011-2012",
+    "options": ["GM/T 0011-2012", "GM/T 0028-2014", "GM/T 0016-2012", "GM/T 0012-2012"],
+    "distractors_explanation": "0028=密码模块安全要求（通用）, 0016=SKF智能密码钥匙接口, 0012=可信计算平台密码方案"
+  },
+  {
+    "id": "C2-026",
+    "category": "C2",
+    "question": "数字证书认证系统密码协议规范（CA系统内部协议）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0014-2012",
+    "options": ["GM/T 0014-2012", "GM/T 0015-2012", "GM/T 0020-2012", "GM/T 0021-2012"],
+    "distractors_explanation": "0015=SM2证书格式规范, 0020=证书申请语法规范, 0021=PKI互操作检测规范"
+  },
+  {
+    "id": "C2-027",
+    "category": "C2",
+    "question": "规定 CA 与 RA 之间密码协议交互格式的 GM/T 标准编号是？",
+    "answer": "GM/T 0014-2012",
+    "options": ["GM/T 0014-2012", "GM/T 0020-2012", "GM/T 0021-2012", "GM/T 0010-2012"],
+    "distractors_explanation": "0020=证书申请语法（PKCS#10类）, 0021=PKI互操作检测规范, 0010=SM2加密签名消息语法"
+  },
+  {
+    "id": "C2-028",
+    "category": "C2",
+    "question": "基于 SM2 算法的数字证书格式规范（X.509 v3 扩展）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0015-2012",
+    "options": ["GM/T 0015-2012", "GM/T 0014-2012", "GM/T 0020-2012", "GM/T 0006-2012"],
+    "distractors_explanation": "0014=CA认证系统密码协议, 0020=证书申请语法规范, 0006=密码应用标识规范"
+  },
+  {
+    "id": "C2-029",
+    "category": "C2",
+    "question": "国密 SM2 证书中 SubjectPublicKeyInfo 字段的编码规则来自哪个标准？",
+    "answer": "GM/T 0015-2012",
+    "options": ["GM/T 0015-2012", "GM/T 0003-2012", "GM/T 0009-2012", "GM/T 0021-2012"],
+    "distractors_explanation": "0003=SM2椭圆曲线算法（算法层）, 0009=SM2签名应用规范, 0021=PKI互操作检测规范"
+  },
+  {
+    "id": "C2-030",
+    "category": "C2",
+    "question": "证书申请语法规范（类似 PKCS#10/CRMF 的国密版本）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0020-2012",
+    "options": ["GM/T 0020-2012", "GM/T 0015-2012", "GM/T 0014-2012", "GM/T 0021-2012"],
+    "distractors_explanation": "0015=SM2证书格式, 0014=CA认证系统密码协议, 0021=PKI互操作检测规范"
+  },
+  {
+    "id": "C2-031",
+    "category": "C2",
+    "question": "用户向 CA 申请 SM2 数字证书时，申请数据的格式封装规则由哪个 GM/T 标准规定？",
+    "answer": "GM/T 0020-2012",
+    "options": ["GM/T 0020-2012", "GM/T 0014-2012", "GM/T 0010-2012", "GM/T 0016-2012"],
+    "distractors_explanation": "0014=CA系统内部协议, 0010=SM2加密签名消息语法, 0016=智能密码钥匙接口"
+  },
+  {
+    "id": "C2-032",
+    "category": "C2",
+    "question": "PKI 互操作性检测规范（测试 CA 之间证书互认）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0021-2012",
+    "options": ["GM/T 0021-2012", "GM/T 0014-2012", "GM/T 0020-2012", "GM/T 0015-2012"],
+    "distractors_explanation": "0014=CA认证系统密码协议, 0020=证书申请语法规范, 0015=SM2证书格式"
+  },
+  {
+    "id": "C2-033",
+    "category": "C2",
+    "question": "以下哪个标准规定了不同 CA 颁发的 SM2 证书互操作性测试方法？",
+    "answer": "GM/T 0021-2012",
+    "options": ["GM/T 0021-2012", "GM/T 0023-2014", "GM/T 0024-2014", "GM/T 0025-2014"],
+    "distractors_explanation": "0023=IPSec VPN技术规范, 0024=SSL VPN技术规范, 0025=SSL VPN网关产品规范"
+  },
+  {
+    "id": "C2-034",
+    "category": "C2",
+    "question": "IPSec VPN 技术规范（国密版本）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0022-2014",
+    "options": ["GM/T 0022-2014", "GM/T 0023-2014", "GM/T 0024-2014", "GM/T 0025-2014"],
+    "distractors_explanation": "0022=IPSec VPN安全协议规范, 0023=IPSec VPN技术规范, 0024=SSL VPN技术规范, 0025=SSL VPN网关产品规范"
+  },
+  {
+    "id": "C2-035",
+    "category": "C2",
+    "question": "IPSec VPN 技术规范（定义国密 IKE/ESP 扩展）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0023-2014",
+    "options": ["GM/T 0023-2014", "GM/T 0022-2014", "GM/T 0024-2014", "GM/T 0025-2014"],
+    "distractors_explanation": "0022=IPSec VPN安全协议, 0024=SSL VPN技术规范, 0025=SSL VPN网关产品规范"
+  },
+  {
+    "id": "C2-036",
+    "category": "C2",
+    "question": "国密 SSL VPN 技术规范（定义握手协议和密码套件）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0024-2014",
+    "options": ["GM/T 0024-2014", "GM/T 0023-2014", "GM/T 0025-2014", "GB/T 38636-2020"],
+    "distractors_explanation": "0023=IPSec VPN技术规范, 0025=SSL VPN网关产品规范, 38636=TLCP传输层密码协议"
+  },
+  {
+    "id": "C2-037",
+    "category": "C2",
+    "question": "SSL VPN 密码套件 ECC_SM4_SM3 定义在哪个 GM/T 标准中？",
+    "answer": "GM/T 0024-2014",
+    "options": ["GM/T 0024-2014", "GM/T 0025-2014", "GB/T 38636-2020", "GM/T 0023-2014"],
+    "distractors_explanation": "0025=SSL VPN网关产品规范（产品层）, 38636=TLCP（新版传输层协议）, 0023=IPSec VPN技术规范"
+  },
+  {
+    "id": "C2-038",
+    "category": "C2",
+    "question": "国密 SSL VPN 握手中双证书机制（签名证书+加密证书）定义在哪个标准？",
+    "answer": "GM/T 0024-2014",
+    "options": ["GM/T 0024-2014", "GM/T 0015-2012", "GM/T 0025-2014", "GB/T 38636-2020"],
+    "distractors_explanation": "0015=SM2证书格式（证书本身）, 0025=SSL VPN网关产品规范（产品测评）, 38636=TLCP传输层协议"
+  },
+  {
+    "id": "C2-039",
+    "category": "C2",
+    "question": "SSL VPN 网关产品规范（安全功能要求与测试方法）对应哪个 GM/T 标准？",
+    "answer": "GM/T 0025-2014",
+    "options": ["GM/T 0025-2014", "GM/T 0024-2014", "GM/T 0026-2014", "GM/T 0023-2014"],
+    "distractors_explanation": "0024=SSL VPN技术规范（协议层）, 0026=安全认证网关产品规范, 0023=IPSec VPN技术规范"
+  },
+  {
+    "id": "C2-040",
+    "category": "C2",
+    "question": "以下哪个标准规定了 SSL VPN 网关产品的安全功能要求、自身安全保护和性能要求？",
+    "answer": "GM/T 0025-2014",
+    "options": ["GM/T 0025-2014", "GM/T 0024-2014", "GM/T 0028-2014", "GM/T 0026-2014"],
+    "distractors_explanation": "0024=SSL VPN技术规范（协议定义）, 0028=密码模块安全要求（通用模块）, 0026=安全认证网关产品规范"
+  }
+]

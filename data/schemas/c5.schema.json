@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": ["id", "category", "description", "input_code", "expected_behavior", "verification_tool", "verification_params", "scoring"],
+    "additionalProperties": true,
+    "properties": {
+      "id": {"type": "string", "pattern": "^C5-\\d{3}$"},
+      "category": {"type": "string", "const": "C5"},
+      "description": {"type": "string", "minLength": 5},
+      "input_code": {"type": "string", "minLength": 10},
+      "expected_behavior": {"type": "string"},
+      "verification_tool": {"type": "string"},
+      "verification_params": {"type": "object"},
+      "scoring": {
+        "type": "object",
+        "required": ["pass", "partial", "fail"],
+        "properties": {
+          "pass": {"type": "number"},
+          "partial": {"type": "number"},
+          "fail": {"type": "number"}
+        }
+      }
+    }
+  }
+}

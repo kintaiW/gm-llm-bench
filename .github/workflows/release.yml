@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync pyproject.toml version with tag
+        # Reason: importlib.metadata.version() 读取安装包元数据，必须在 build 前回写
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          python3 -c "
+import re
+v = '${VERSION}'
+with open('pyproject.toml', 'r') as f:
+    content = f.read()
+content = re.sub(r'^version = \"[0-9][^\"]*\"', f'version = \"{v}\"', content, count=1, flags=re.MULTILINE)
+with open('pyproject.toml', 'w') as f:
+    f.write(content)
+print(f'pyproject.toml version set to {v}')
+"
+          grep "^version" pyproject.toml
+
+      - name: Install dependencies
+        run: |
+          pip install build
+          pip install -e .
+
+      - name: Assert runtime version matches tag
+        # Reason: 确认 gm-bench --version 与 tag 一致，捕获 pyproject.toml 回写失效的情况
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gm-bench --version | grep -F "${VERSION}" \
+            || { echo "❌ tag=${VERSION} 但 gm-bench --version 不匹配"; exit 1; }
+          echo "✅ 版本一致：gm-bench ${VERSION}"
+
+      - name: Build distribution packages
+        run: python -m build
+
+      - name: Extract CHANGELOG entry
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          # 提取 CHANGELOG.md 中对应版本的段落
+          NOTES=$(awk "/^## \[${VERSION}\]/,/^## \[/" CHANGELOG.md | head -n -1 | tail -n +2)
+          # 多行输出写入 GITHUB_OUTPUT
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "${NOTES}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: dist/*
+          generate_release_notes: false
+          body: |
+            ## GM-Bench ${{ github.ref_name }}
+
+            国密 LLM 能力评测基准（GM/T 密评专项）。
+
+            ${{ steps.changelog.outputs.notes }}
+
+            ### 安装
+
+            ```bash
+            pip install gm-llm-bench==${{ github.ref_name }}
+            # 或直接从 wheel 安装：
+            pip install gm_llm_bench-${{ github.ref_name }}-*.whl
+            ```
+
+            ### 快速使用
+
+            ```bash
+            gm-bench --model gpt-4o --categories C1,C2,C3,C4
+            ```
+
+            ### 注意事项
+
+            - C5/C6 类别需要 `--svs-mock-url` 参数（或 `SVS_MOCK_URL` 环境变量）
+            - 国产 LLM 通过 `--base-url` 透传兼容接口地址

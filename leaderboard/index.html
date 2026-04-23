@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GM-Bench Leaderboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+    h1 { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .subtitle { text-align: center; color: #94a3b8; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; }
+    thead tr { background: #334155; }
+    th, td { padding: 12px 16px; text-align: center; border-bottom: 1px solid #334155; }
+    th { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+    td:nth-child(2) { text-align: left; }
+    tr:hover { background: #243347; }
+    .footer { text-align: center; margin-top: 2rem; color: #64748b; font-size: 0.85rem; }
+    .stats { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+    .stat { background: #1e293b; border-radius: 8px; padding: 1rem 1.5rem; text-align: center; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; color: #38bdf8; }
+    .stat-label { font-size: 0.8rem; color: #94a3b8; }
+    .cat-desc { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem; }
+    .cat-badge { background: #334155; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 GM-Bench Leaderboard</h1>
+    <p class="subtitle">The first benchmark for LLMs on China's commercial cryptography compliance (密评)</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="model-count">0</div><div class="stat-label">Models Evaluated</div></div>
+      <div class="stat"><div class="stat-num">300</div><div class="stat-label">MVP Questions</div></div>
+      <div class="stat"><div class="stat-num">C1–C6</div><div class="stat-label">Categories</div></div>
+    </div>
+
+    <div class="cat-desc">
+      <span class="cat-badge">C1 条款归属 ×60</span>
+      <span class="cat-badge">C2 标准映射 ×40</span>
+      <span class="cat-badge">C3 SKOD评分 ×50</span>
+      <span class="cat-badge">C4 不符合项 ×40</span>
+      <span class="cat-badge">C5 代码改写 ×30</span>
+      <span class="cat-badge">C6 工具调用 ×80</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Model</th>
+          <th>C1 条款</th>
+          <th>C2 标准</th>
+          <th>C3 SKOD</th>
+          <th>C4 整改</th>
+          <th>C5 代码</th>
+          <th>C6 工具</th>
+          <th>Total</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="lb-body">
+        <tr>
+          <td colspan="10" style="text-align:center;padding:2rem;color:#64748b">
+            暂无评测结果 — 运行 <code>python harness/run_eval.py --model gpt-4o --categories C1,C2,C3,C4</code> 开始评测
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <p>GM-Bench · Apache-2.0 · <a href="https://github.com/yourusername/gm-llm-bench" style="color:#38bdf8">GitHub</a></p>
+      <p style="margin-top:0.5rem">⚠️ For research purposes only. Scores do not constitute official compliance certification.</p>
+    </div>
+  </div>
+
+  <script>
+    // 动态加载 results/*.json 并渲染排行榜
+    async function loadResults() {
+      const models = [];
+      const categories = ['C1','C2','C3','C4','C5','C6'];
+
+      // 尝试加载已知结果文件（由 update_leaderboard.py 注入）
+      const RESULTS = window.GM_BENCH_RESULTS || [];
+
+      RESULTS.sort((a, b) => b.total_pct - a.total_pct);
+      document.getElementById('model-count').textContent = RESULTS.length;
+
+      if (RESULTS.length === 0) return;
+
+      const tbody = document.getElementById('lb-body');
+      tbody.innerHTML = '';
+
+      RESULTS.forEach((row, i) => {
+        const medals = ['🥇','🥈','🥉'];
+        const rank = i < 3 ? medals[i] : (i + 1);
+        const catCells = categories.map(cat => {
+          const v = row[cat] ?? '-';
+          if (v === '-') return '<td>—</td>';
+          const color = v >= 80 ? '#22c55e' : v >= 60 ? '#f59e0b' : '#ef4444';
+          return `<td style="color:${color}">${v}%</td>`;
+        }).join('');
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${rank}</td>
+            <td><strong>${row.model}</strong></td>
+            ${catCells}
+            <td><strong>${row.total_pct}%</strong></td>
+            <td style="font-size:0.8em;color:#6b7280">${(row.timestamp||'').substring(0,10)}</td>
+          </tr>`;
+      });
+    }
+    loadResults();
+  </script>
+</body>
+</html>
