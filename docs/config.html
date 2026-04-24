@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配置说明 - GM-Bench</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>GM-Bench</h1>
+        <p>全球首个面向中国商用密码合规（密评）的大模型评测集</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="guide.html">快速开始</a></li>
+            <li><a href="api.html">评测接口</a></li>
+            <li><a href="config.html" class="active">配置说明</a></li>
+            <li><a href="leaderboard.html">排行榜</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>配置说明</h2>
+        <p>本页面介绍 GM-Bench 的配置选项和环境变量。</p>
+    </section>
+
+    <section>
+        <h2>环境变量</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>环境变量</th>
+                    <th>说明</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>OPENAI_API_KEY</td>
+                    <td>OpenAI API 密钥（用于 GPT 模型）</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td>ANTHROPIC_API_KEY</td>
+                    <td>Anthropic API 密钥（用于 Claude 模型）</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td>DEEPSEEK_API_KEY</td>
+                    <td>DeepSeek API 密钥（用于 DeepSeek 模型）</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td>SVS_MOCK_URL</td>
+                    <td>SVS Mock 服务 URL（用于 C5/C6 评测）</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td>RUST_LOG</td>
+                    <td>Mock 服务的日志级别（debug, info, warn, error）</td>
+                    <td>info</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>题目配置</h2>
+        <p>评测题目位于 <code>data/questions/</code> 目录，按类别分为 6 个 JSON 文件：</p>
+        <ul>
+            <li><code>c1_clause_attribution.json</code> - 60 题：条款归属单选</li>
+            <li><code>c2_standard_mapping.json</code> - 40 题：标准编号匹配</li>
+            <li><code>c3_skod_scoring.json</code> - 50 题：SKOD 四维数值评分</li>
+            <li><code>c4_nonconformity.json</code> - 40 题：不符合项多选+严重程度</li>
+            <li><code>c5_code_rewriting.json</code> - 30 题：国密代码改写</li>
+            <li><code>c6_tool_use.json</code> - 80 题：MCP 工具调用序列</li>
+        </ul>
+
+        <h3>题目格式示例</h3>
+        <h4>C1/C2 格式</h4>
+        <pre><code>{"id": "C1-001",
+ "category": "C1",
+ "question": "...",
+ "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
+ "answer": "C",
+ "clause": "6.1 物理和环境安全",
+ "explanation": "..."}</code></pre>
+
+        <h4>C3 格式</h4>
+        <pre><code>{"id": "C3-001",
+ "category": "C3",
+ "scenario": "某电商平台密评情况描述...",
+ "question": "请对该系统进行 SKOD 评估...",
+ "reference_scores": {"S": 1, "K": 0, "O": 1, "D": 0},
+ "scoring_tolerance": 2,
+ "explanation": "..."}</code></pre>
+
+        <h4>C4 格式</h4>
+        <pre><code>{"id": "C4-001",
+ "category": "C4",
+ "scenario": "场景描述...",
+ "question": "选出所有不符合项并标注严重程度",
+ "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
+ "answer": ["A", "B"],
+ "severity": {"A": "严重", "B": "一般"},
+ "explanation": "..."}</code></pre>
+
+        <h4>C6 格式</h4>
+        <pre><code>{"id": "C6-001",
+ "category": "C6",
+ "scenario": "场景描述...",
+ "expected_tool_sequence": ["svs_sign", "svs_verify"],
+ "acceptable_alternatives": [["sdf_sm2_sign", "sdf_sm2_verify"]],
+ "scoring": {"exact_match": 10, "acceptable": 8, "partial_sequence": 5, "wrong_tool": 0}}</code></pre>
+    </section>
+
+    <section>
+        <h2>Mock 服务配置</h2>
+        <h3>SVS Mock 配置</h3>
+        <p>SVS Mock 使用 <code>mock_certs.toml</code> 配置文件，位于 SVS Mock 项目根目录：</p>
+        <pre><code># 设备证书
+[device_cert]
+pem = """
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+"""
+
+# 可信根证书
+[[trusted_certs]]
+pem = """
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+"""
+</code></pre>
+
+        <h3>环境变量</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>环境变量</th>
+                    <th>默认值</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PORT</td>
+                    <td>3000</td>
+                    <td>服务监听端口</td>
+                </tr>
+                <tr>
+                    <td>HOST</td>
+                    <td>127.0.0.1</td>
+                    <td>服务监听地址</td>
+                </tr>
+                <tr>
+                    <td>SVS_MOCK_CONFIG</td>
+                    <td>mock_certs.toml</td>
+                    <td>配置文件路径</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>排行榜配置</h2>
+        <p>排行榜页面由 <code>scripts/update_leaderboard.py</code> 生成，读取 <code>leaderboard/results/</code> 目录下的所有 JSON 文件。</p>
+        <pre><code>python scripts/update_leaderboard.py
+# 生成 leaderboard/index.html</code></pre>
+
+        <h3>排行榜生成逻辑</h3>
+        <ol>
+            <li>读取所有模型的评测结果 JSON 文件</li>
+            <li>按总分排序</li>
+            <li>生成 HTML 排行榜页面</li>
+            <li>包含每个模型在各维度的得分</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>自定义配置</h2>
+        <h3>修改评测参数</h3>
+        <p>在 <code>harness/run_eval.py</code> 中可以修改以下参数：</p>
+        <ul>
+            <li><code>SLEEP_BETWEEN_QUESTIONS</code> - 题目间休眠时间</li>
+            <li><code>MAX_RETRIES</code> - API 调用失败重试次数</li>
+            <li><code>TIMEOUT</code> - API 调用超时时间</li>
+        </ul>
+
+        <h3>添加自定义评测器</h3>
+        <p>在 <code>harness/evaluators/</code> 目录下添加新的评测器，实现 <code>evaluate()</code> 方法。</p>
+    </section>
+
+    <footer>
+        <p>GM-Bench - 全球首个面向中国商用密码合规的大模型评测集</p>
+        <p><a href="https://github.com/kintaiW/gm-llm-bench">GitHub 仓库</a> | <a href="https://github.com/kintaiW/gm-agent-stack">gm-agent-stack</a> | Apache-2.0 License</p>
+        <p>© 2026 gm-agent-stack contributors</p>
+    </footer>
+</body>
+</html>

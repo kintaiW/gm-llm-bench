@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GM-Bench - 国密 LLM 能力评测基准</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>GM-Bench</h1>
+        <p>全球首个面向中国商用密码合规（密评）的大模型评测集</p>
+        <div>
+            <span class="badge badge-primary">176 题</span>
+            <span class="badge badge-primary">6 类别</span>
+            <span class="badge badge-success">可执行验证</span>
+            <span class="badge badge-primary">Apache-2.0</span>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">首页</a></li>
+            <li><a href="guide.html">快速开始</a></li>
+            <li><a href="api.html">评测接口</a></li>
+            <li><a href="config.html">配置说明</a></li>
+            <li><a href="leaderboard.html">排行榜</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>什么是 GM-Bench？</h2>
+        <p>GM-Bench 是全球首个面向中国商用密码合规（密评）的大模型评测集，用 Go 编写。它衡量 AI 在国密领域从"知道"到"能做"的完整能力链。</p>
+        
+        <div class="alert alert-info">
+            <strong>核心价值：</strong>GM-Bench 不只是选择题集，它通过可执行验证来衡量 LLM 的国密能力，包括代码改写和工具调用的实际运行验证。
+        </div>
+    </section>
+
+    <section>
+        <h2>评测维度</h2>
+        <div class="features">
+            <div class="card">
+                <h3>C1 - 条款归属</h3>
+                <p>60 题，单选题，考察 AI 能否将密评要求归属到正确标准条款。</p>
+            </div>
+            <div class="card">
+                <h3>C2 - 标准映射</h3>
+                <p>40 题，匹配题，考察 AI 能否把设备/协议/算法对应到正确 GM/T 编号。</p>
+            </div>
+            <div class="card">
+                <h3>C3 - SKOD 评分</h3>
+                <p>50 题，数值 JSON，考察 AI 能否对实际系统做出合理的四维密评打分。</p>
+            </div>
+            <div class="card">
+                <h3>C4 - 不符合项分级</h3>
+                <p>40 题，多选 + 严重程度，考察 AI 能否识别不符合项并判断严重/一般/轻微。</p>
+            </div>
+            <div class="card">
+                <h3>C5 - 代码改写</h3>
+                <p>30 题，代码生成，考察 AI 能否生成可跑通的国密迁移代码。</p>
+            </div>
+            <div class="card">
+                <h3>C6 - 工具调用</h3>
+                <p>80 题，MCP 调用序列，考察 AI 能否选择正确的 MCP 工具序列完成任务。</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>关键特性</h2>
+        <ul>
+            <li><strong>可执行验证：</strong>C5 和 C6 用代码说话，实际运行对接 SVS/SDF/SKF Mock 设备</li>
+            <li><strong>标准覆盖：</strong>基于 GB/T 39786-2021 和多个 GM/T 标准</li>
+            <li><strong>多模型支持：</strong>支持 GPT-4o、Claude Opus、DeepSeek 等主流模型</li>
+            <li><strong>排行榜系统：</strong>自动生成 HTML 排行榜页面</li>
+            <li><strong>易于扩展：</strong>支持添加新模型和新题目</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>快速开始</h2>
+        <pre><code># 安装依赖
+git clone https://github.com/kintaiW/gm-llm-bench
+cd gm-llm-bench
+pip install -r requirements.txt
+
+# 评测 C1-C4（无需 Mock）
+export OPENAI_API_KEY=sk-...
+python harness/run_eval.py \
+  --model gpt-4o \
+  --categories C1,C2,C3,C4 \
+  --output leaderboard/results/gpt-4o.json
+
+# 查看结果
+python scripts/update_leaderboard.py
+# 生成 leaderboard/index.html</code></pre>
+        <a href="guide.html" class="btn">详细指南</a>
+    </section>
+
+    <section>
+        <h2>项目结构</h2>
+        <pre><code>gm-llm-bench/
+├── data/
+│   └── questions/         # 评测题目
+├── harness/
+│   ├── run_eval.py        # 主入口
+│   ├── evaluators/        # 评分器
+│   └── providers/         # 模型提供器
+├── leaderboard/
+│   ├── index.html         # 排行榜页面
+│   └── results/           # 评测结果
+├── scripts/
+│   ├── run_all_models.sh  # 批量评测脚本
+│   └── update_leaderboard.py # 生成排行榜
+└── requirements.txt</code></pre>
+    </section>
+
+    <section>
+        <h2>配套项目</h2>
+        <ul>
+            <li><a href="https://github.com/kintaiW/0029-svs-mock">0029-svs-mock</a> - 签名验签服务器模拟器（C5/C6 验证用）</li>
+            <li><a href="https://github.com/kintaiW/0018-sdf-mock">0018-sdf-mock</a> - 服务器密码机模拟器（C5/C6 验证用）</li>
+            <li><a href="https://github.com/kintaiW/0016-skf-mock">0016-skf-mock</a> - 智能密码钥匙模拟器（C5/C6 验证用）</li>
+            <li><a href="https://github.com/kintaiW/ccasa-harness">ccasa-harness</a> - AI 密评助手（使用 GM-Bench 评测）</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>GM-Bench - 全球首个面向中国商用密码合规的大模型评测集</p>
+        <p><a href="https://github.com/kintaiW/gm-llm-bench">GitHub 仓库</a> | <a href="https://github.com/kintaiW/gm-agent-stack">gm-agent-stack</a> | Apache-2.0 License</p>
+        <p>© 2026 gm-agent-stack contributors</p>
+    </footer>
+</body>
+</html>

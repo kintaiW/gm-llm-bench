@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速开始 - GM-Bench</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>GM-Bench</h1>
+        <p>全球首个面向中国商用密码合规（密评）的大模型评测集</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="guide.html" class="active">快速开始</a></li>
+            <li><a href="api.html">评测接口</a></li>
+            <li><a href="config.html">配置说明</a></li>
+            <li><a href="leaderboard.html">排行榜</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>快速开始</h2>
+        <p>本指南将帮助你快速上手 GM-Bench，开始评测大模型的国密能力。</p>
+    </section>
+
+    <section>
+        <h2>环境要求</h2>
+        <ul>
+            <li>Python ≥ 3.11</li>
+            <li>pip 包管理工具</li>
+            <li>可选：gm-agent-stack Mock 服务（用于 C5/C6 评测）</li>
+        </ul>
+        <div class="alert alert-info">
+            <strong>注意：</strong>开发机 Python 版本低于 3.11 时，harness 代码需要安装 Python 3.11+。C5/C6 需要额外运行 gm-agent-stack Mock 服务。
+        </div>
+    </section>
+
+    <section>
+        <h2>1. 安装依赖</h2>
+        <pre><code>git clone https://github.com/kintaiW/gm-llm-bench
+cd gm-llm-bench
+pip install -r requirements.txt</code></pre>
+        <p><strong>requirements.txt 内容：</strong></p>
+        <pre><code>anthropic>=0.40.0
+openai>=1.50.0
+httpx>=0.27.0</code></pre>
+    </section>
+
+    <section>
+        <h2>2. 仅评测 C1-C4（无需 Mock，最简单）</h2>
+        <h3>GPT-4o</h3>
+        <pre><code>export OPENAI_API_KEY=sk-...
+python harness/run_eval.py \
+  --model gpt-4o \
+  --categories C1,C2,C3,C4 \
+  --output leaderboard/results/gpt-4o.json</code></pre>
+
+        <h3>Claude Opus</h3>
+        <pre><code>export ANTHROPIC_API_KEY=sk-ant-...
+python harness/run_eval.py \
+  --model claude-opus-4-7 \
+  --categories C1,C2,C3,C4</code></pre>
+
+        <h3>DeepSeek</h3>
+        <pre><code>export DEEPSEEK_API_KEY=sk-...
+python harness/run_eval.py \
+  --model deepseek-chat \
+  --categories C1,C2,C3,C4</code></pre>
+    </section>
+
+    <section>
+        <h2>3. 评测 C5/C6（需要 Mock 服务）</h2>
+        <h3>第一步：启动 SVS Mock（来自 gm-agent-stack）</h3>
+        <pre><code>cd ../mp-mock/0029-svs-mock
+cargo run -- --mode both &
+# Mock 默认监听 http://localhost:9000</code></pre>
+
+        <h3>第二步：运行完整评测</h3>
+        <pre><code>export SVS_MOCK_URL=http://localhost:9000/mcp
+python harness/run_eval.py \
+  --model gpt-4o \
+  --categories C1,C2,C3,C4,C5,C6 \
+  --svs-mock-url $SVS_MOCK_URL</code></pre>
+    </section>
+
+    <section>
+        <h2>4. 查看结果</h2>
+        <p>评测完成后，结果保存在 <code>leaderboard/results/&lt;model&gt;.json</code>：</p>
+        <pre><code>{"model": "gpt-4o",
+ "timestamp": "2026-04-22T10:00:00Z",
+ "total_score": 1234.5,
+ "total_max": 1760.0,
+ "total_pct": 70.1,
+ "categories": {
+   "C1": {"score": 450.0, "max": 600.0, "pct": 75.0, "count": 60},
+   "C2": {"score": 320.0, "max": 400.0, "pct": 80.0, "count": 40},
+   "C3": {"score": 280.0, "max": 500.0, "pct": 56.0, "count": 50},
+   "C4": {"score": 184.5, "max": 400.0, "pct": 46.1, "count": 40}
+ }}</code></pre>
+
+        <h3>更新排行榜页面：</h3>
+        <pre><code>python scripts/update_leaderboard.py
+# 生成 leaderboard/index.html，可直接浏览器打开或部署到 GitHub Pages</code></pre>
+    </section>
+
+    <section>
+        <h2>5. 一键跑所有模型</h2>
+        <pre><code>export OPENAI_API_KEY=sk-...
+export ANTHROPIC_API_KEY=sk-ant-...
+export DEEPSEEK_API_KEY=sk-...
+
+bash scripts/run_all_models.sh</code></pre>
+    </section>
+
+    <section>
+        <h2>调试模式（只跑前 5 题）</h2>
+        <pre><code>python harness/run_eval.py \
+  --model gpt-4o \
+  --categories C1 \
+  --max-questions 5 \
+  --sleep 0</code></pre>
+    </section>
+
+    <section>
+        <h2>常见问题</h2>
+        <h3>Q: 评测速度如何？</h3>
+        <p>A: C1-C4 约 190 题，每个模型需要 10-15 分钟；C5-C6 约 110 题，需要 20-30 分钟。</p>
+
+        <h3>Q: 如何添加新模型？</h3>
+        <p>A: 见 <a href="api.html">评测接口</a> 页面的添加新模型部分。</p>
+
+        <h3>Q: Mock 服务必须启动吗？</h3>
+        <p>A: 只评测 C1-C4 时不需要；评测 C5-C6 时需要启动 SVS Mock。</p>
+    </section>
+
+    <footer>
+        <p>GM-Bench - 全球首个面向中国商用密码合规的大模型评测集</p>
+        <p><a href="https://github.com/kintaiW/gm-llm-bench">GitHub 仓库</a> | <a href="https://github.com/kintaiW/gm-agent-stack">gm-agent-stack</a> | Apache-2.0 License</p>
+        <p>© 2026 gm-agent-stack contributors</p>
+    </footer>
+</body>
+</html>

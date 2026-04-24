@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评测接口 - GM-Bench</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>GM-Bench</h1>
+        <p>全球首个面向中国商用密码合规（密评）的大模型评测集</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="guide.html">快速开始</a></li>
+            <li><a href="api.html" class="active">评测接口</a></li>
+            <li><a href="config.html">配置说明</a></li>
+            <li><a href="leaderboard.html">排行榜</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>评测接口</h2>
+        <p>本页面介绍 GM-Bench 的评测接口和使用方法，包括如何添加新模型。</p>
+    </section>
+
+    <section>
+        <h2>命令行接口</h2>
+        <pre><code>python harness/run_eval.py [选项]</code></pre>
+        
+        <h3>主要选项</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>选项</th>
+                    <th>说明</th>
+                    <th>默认值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>--model</td>
+                    <td>模型名称（gpt-4o, claude-opus-4-7, deepseek-chat 等）</td>
+                    <td>必填</td>
+                </tr>
+                <tr>
+                    <td>--categories</td>
+                    <td>评测类别，逗号分隔（C1,C2,C3,C4,C5,C6）</td>
+                    <td>全部</td>
+                </tr>
+                <tr>
+                    <td>--output</td>
+                    <td>结果输出文件路径</td>
+                    <td>leaderboard/results/&lt;model&gt;.json</td>
+                </tr>
+                <tr>
+                    <td>--svs-mock-url</td>
+                    <td>SVS Mock 服务 URL（用于 C5/C6）</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td>--max-questions</td>
+                    <td>每个类别最大评测题目数（调试用）</td>
+                    <td>无限制</td>
+                </tr>
+                <tr>
+                    <td>--sleep</td>
+                    <td>题目间休眠时间（秒）</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>添加新模型</h2>
+        <h3>方案一：使用现有 OpenAI 兼容 Provider</h3>
+        <p>对于 Qwen、Kimi、豆包等支持 OpenAI 接口的模型：</p>
+        <pre><code>export OPENAI_API_KEY=你的key
+python harness/run_eval.py \
+  --model qwen-max \
+  --categories C1,C2,C3,C4</code></pre>
+
+        <h3>方案二：自定义 Provider</h3>
+        <p>如果 base_url 不同（如阿里云 DashScope），可以在 <code>harness/providers/openai_provider.py</code> 里传入 <code>base_url</code> 参数，或新建一个 provider：</p>
+        <pre><code># harness/providers/qwen_provider.py
+from .openai_provider import OpenAIProvider
+import os
+
+class QwenProvider(OpenAIProvider):
+    def __init__(self, model: str = "qwen-max"):
+        import openai
+        self.model = model
+        self.client = openai.OpenAI(
+            api_key=os.getenv("DASHSCOPE_API_KEY", ""),
+            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        )</code></pre>
+
+        <h3>方案三：提交 PR</h3>
+        <ol>
+            <li>在 <code>harness/providers/</code> 下添加 provider 文件</li>
+            <li>在 <code>harness/run_eval.py</code> 的 <code>get_provider()</code> 中加入判断</li>
+            <li>运行评测，把结果 JSON 放入 <code>leaderboard/results/你的模型名.json</code></li>
+            <li>提交 PR</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>评测结果格式</h2>
+        <pre><code>{
+  "model": "gpt-4o",           // 模型名称
+  "timestamp": "2026-04-22T10:00:00Z", // 评测时间
+  "total_score": 1234.5,       // 总分
+  "total_max": 1760.0,         // 满分
+  "total_pct": 70.1,           // 百分比
+  "categories": {              // 各类别得分
+    "C1": {                    // C1 条款归属
+      "score": 450.0,          // 得分
+      "max": 600.0,            // 满分
+      "pct": 75.0,             // 百分比
+      "count": 60              // 题目数
+    },
+    // 其他类别...
+  }
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>评分规则详解</h2>
+        <h3>C1/C2 — 字符串匹配</h3>
+        <pre><code>正确 → 10 分
+错误 → 0 分</code></pre>
+        <p>C1 提取 LLM 响应中的 A/B/C/D 字母；C2 提取 GM/T 或 GB/T 标准编号。容忍空格差异（<code>GM/T 0016-2012</code> = <code>GM/T0016-2012</code>）。</p>
+
+        <h3>C3 — 容差评分</h3>
+        <pre><code>每个维度（S/K/O/D）：
+  |预测值 - 参考值| ≤ 容差（默认 2）→ 该维度满分
+  否则 → 0 分
+
+最终分数 = (通过维度数 / 4) × 10</code></pre>
+
+        <h3>C4 — F1 + 严重程度</h3>
+        <pre><code>精确率 P = TP / (TP + FP)   # 预测的里有多少是对的
+召回率 R = TP / (TP + FN)   # 正确答案里有多少被预测到了
+F1 = 2 × P × R / (P + R)
+
+严重程度匹配率 = 正确匹配严重程度的选项 / 正确选中的选项数
+
+最终分数 = (F1 × 0.7 + 严重程度匹配率 × 0.3) × 10</code></pre>
+
+        <h3>C5 — 代码改写（无 Mock）</h3>
+        <pre><code>基础分：
+  语法可解析            → +2 分
+  包含国密关键词         → +8 分
+  混用了非国密算法       → 降至 3 分
+
+有 Mock 时额外：
+  代码能对接 Mock 执行   → +5 分（替代部分静态分）</code></pre>
+
+        <h3>C6 — 工具序列</h3>
+        <pre><code>精确匹配（顺序完全一致） → exact_match 分（通常 10 分）
+可接受替代序列           → acceptable 分（通常 8 分）
+部分匹配（覆盖率 × 5）  → partial_sequence 分
+完全错误                → 0 分</code></pre>
+    </section>
+
+    <footer>
+        <p>GM-Bench - 全球首个面向中国商用密码合规的大模型评测集</p>
+        <p><a href="https://github.com/kintaiW/gm-llm-bench">GitHub 仓库</a> | <a href="https://github.com/kintaiW/gm-agent-stack">gm-agent-stack</a> | Apache-2.0 License</p>
+        <p>© 2026 gm-agent-stack contributors</p>
+    </footer>
+</body>
+</html>

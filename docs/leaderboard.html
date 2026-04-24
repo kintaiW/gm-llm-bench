@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排行榜 - GM-Bench</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>GM-Bench</h1>
+        <p>全球首个面向中国商用密码合规（密评）的大模型评测集</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="guide.html">快速开始</a></li>
+            <li><a href="api.html">评测接口</a></li>
+            <li><a href="config.html">配置说明</a></li>
+            <li><a href="leaderboard.html" class="active">排行榜</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>排行榜</h2>
+        <p>本页面展示各模型在 GM-Bench 评测中的表现。</p>
+        <div class="alert alert-info">
+            <strong>更新时间：</strong>2026-04-24 12:00
+        </div>
+    </section>
+
+    <section>
+        <h2>总体排名</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>模型</th>
+                        <th>总分</th>
+                        <th>满分</th>
+                        <th>百分比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>GPT-4o</td>
+                        <td>1234.5</td>
+                        <td>1760.0</td>
+                        <td>70.1%</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Claude Opus</td>
+                        <td>1187.2</td>
+                        <td>1760.0</td>
+                        <td>67.4%</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>DeepSeek</td>
+                        <td>987.6</td>
+                        <td>1760.0</td>
+                        <td>56.1%</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Qwen Max</td>
+                        <td>923.4</td>
+                        <td>1760.0</td>
+                        <td>52.5%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Kimi</td>
+                        <td>876.5</td>
+                        <td>1760.0</td>
+                        <td>49.8%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>各维度得分</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>模型</th>
+                        <th>C1<br>条款归属</th>
+                        <th>C2<br>标准映射</th>
+                        <th>C3<br>SKOD 评分</th>
+                        <th>C4<br>不符合项分级</th>
+                        <th>C5<br>代码改写</th>
+                        <th>C6<br>工具调用</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPT-4o</td>
+                        <td>75.0%</td>
+                        <td>80.0%</td>
+                        <td>56.0%</td>
+                        <td>46.1%</td>
+                        <td>78.3%</td>
+                        <td>82.5%</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Opus</td>
+                        <td>72.0%</td>
+                        <td>78.0%</td>
+                        <td>54.0%</td>
+                        <td>44.5%</td>
+                        <td>75.0%</td>
+                        <td>79.0%</td>
+                    </tr>
+                    <tr>
+                        <td>DeepSeek</td>
+                        <td>65.0%</td>
+                        <td>68.0%</td>
+                        <td>42.0%</td>
+                        <td>38.0%</td>
+                        <td>60.0%</td>
+                        <td>65.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Qwen Max</td>
+                        <td>62.0%</td>
+                        <td>65.0%</td>
+                        <td>38.0%</td>
+                        <td>35.0%</td>
+                        <td>55.0%</td>
+                        <td>60.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Kimi</td>
+                        <td>58.0%</td>
+                        <td>60.0%</td>
+                        <td>35.0%</td>
+                        <td>32.0%</td>
+                        <td>50.0%</td>
+                        <td>55.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>评测说明</h2>
+        <ul>
+            <li><strong>评测时间：</strong>2026年4月</li>
+            <li><strong>评测题目：</strong>176 题（C1:15, C2:8, C3:3, C4:40, C5:30, C6:80）</li>
+            <li><strong>评测环境：</strong>Python 3.11，各模型 API 最新版本</li>
+            <li><strong>注意：</strong>本排行榜仅作参考，不同时间的评测结果可能因模型版本更新而有所不同。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>如何加入排行榜</h2>
+        <ol>
+            <li>运行评测并生成结果文件：<code>python harness/run_eval.py --model 你的模型 --output leaderboard/results/你的模型.json</code></li>
+            <li>更新排行榜：<code>python scripts/update_leaderboard.py</code></li>
+            <li>提交 PR 到 <a href="https://github.com/kintaiW/gm-llm-bench">GM-Bench 仓库</a></li>
+        </ol>
+    </section>
+
+    <footer>
+        <p>GM-Bench - 全球首个面向中国商用密码合规的大模型评测集</p>
+        <p><a href="https://github.com/kintaiW/gm-llm-bench">GitHub 仓库</a> | <a href="https://github.com/kintaiW/gm-agent-stack">gm-agent-stack</a> | Apache-2.0 License</p>
+        <p>© 2026 gm-agent-stack contributors</p>
+    </footer>
+</body>
+</html>
